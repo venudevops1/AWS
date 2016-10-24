@@ -1,0 +1,47 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: yes
+  vars:
+ 
+  tasks:
+
+  - name: installing python pip
+    shell: apt-get install -y python-pip
+    sudo: yes
+
+  - name: installing aws eb cli
+    shell: pip install awsebcli
+    sudo: yes
+
+  - name: configuring aws cli
+    shell: export AWS_ACCESS_KEY_ID = "{{ aws_access_id }}"
+    sudo: yes
+
+  - name: configuring access key
+    shell: export AWS_SECRET_ACCESS_KEY = "{{ aws_secret_id }}"
+    sudo: yes
+
+  - name: creating application folder
+    shell: mkdir -p HelloWorld
+    args:
+     creates: HelloWorld
+     chdir: /home/ubuntu/example
+
+  - name: copying index file to HelloWorld folder
+    shell: cp /home/ubuntu/example/index.php /home/ubuntu/example/HelloWorld
+
+  - name: initializing beanstalk application
+    shell: eb init HelloWorld -p "PHP 7.0" -k "{{ test }}" --region= "{{ region }}"
+    args:
+     chdir: /home/ubuntu/example/HelloWorld
+  - name: creating beanstalk environment
+    shell: eb create dev-env
+    args:
+     chdir: /home/ubuntu/example/HelloWorld
+
+  - name: deploying beanstalk application
+    shell: eb deploy
+    args:
+     chdir: /home/ubuntu/example/HelloWorld
+
