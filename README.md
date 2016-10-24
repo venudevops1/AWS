@@ -14,6 +14,6 @@ region=[*******]
 
 test=[***.pem]
 
-    Once you run the code by giving these variable it will launch the ebs with simple web application as i deployed ad build.
-It will automatically scale up and scale down through network input.If the network traffic is more than 20,00,000 it will aut-
-matically launch a new instance and if it is less then it will automatically delete the instance
+    Once you run the code by giving these variable it will launch the ebs with simple web application as i deployed.
+It will automatically scale up and scale down through network input.If the network traffic is more than 20,00,000 
+it will autmatically launch a new instance and if it is less then it will automatically delete the instance
